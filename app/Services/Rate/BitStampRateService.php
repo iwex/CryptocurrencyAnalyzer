@@ -15,10 +15,11 @@ class BitStampRateService implements RateServiceInterface
         $client = new Client();
 
         /** @var Response $response */
-        $response        = $client->request('GET', self::URL);
-        $lastHour        = $client->request('GET', self::LAST_HOUR_URL);
-        $responseContent = \GuzzleHttp\json_decode($response->getBody()->getContents());
+        $response         = $client->request('GET', self::URL);
+        $lastHour         = $client->request('GET', self::LAST_HOUR_URL);
+        $responseContent  = \GuzzleHttp\json_decode($response->getBody()->getContents());
         $lastHourResponse = \GuzzleHttp\json_decode($lastHour->getBody()->getContents());
+
         $rate = new Rate(
             'BTC',
             'USD',
@@ -26,6 +27,7 @@ class BitStampRateService implements RateServiceInterface
             $lastHourResponse->last,
             $responseContent->volume
         );
+
         return $rate;
     }
 }
