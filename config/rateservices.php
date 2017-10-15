@@ -2,5 +2,6 @@
 
 return [
     'cryptonator' => \App\Services\Rate\CryptonatorRateService::class,
-    'cryptowat' => \App\Services\Rate\CryptowatRateService::class,
+    'bitstamp'    => \App\Services\Rate\BitStampRateService::class,
+    'cryptowat'   => \App\Services\Rate\CryptowatRateService::class,
 ];

@@ -4,5 +4,5 @@ namespace App\Services\Rate;
 
 interface RateServiceInterface
 {
-    public function getRate() : Rate;
+    public function getRate(): Rate;
 }

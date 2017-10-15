@@ -93,7 +93,7 @@ class Rate
     /**
      * @return float|null
      */
-    public function getVolume() : ?float
+    public function getVolume(): ?float
     {
         return $this->volume;
     }
@@ -109,7 +109,7 @@ class Rate
     /**
      * @return float|null
      */
-    public function getChange() : ?float
+    public function getChange(): ?float
     {
         return $this->change;
     }
@@ -121,5 +121,4 @@ class Rate
     {
         $this->change = $change;
     }
-
 }

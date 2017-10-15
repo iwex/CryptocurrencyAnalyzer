@@ -4,12 +4,14 @@ namespace App\Services\Rate;
 
 class CryptonatorRateService extends AbstractRateService implements RateServiceInterface
 {
+    const URL = 'https://api.cryptonator.com/api/full/btc-us';
+
     /**
      * {@inheritdoc}
      */
     public function getRate(): Rate
     {
-        $responseContent = $this->getResponseContent();
+        $responseContent = $this->getResponseContent('GET', self::URL);
 
         return new Rate(
             $responseContent->ticker->base,
@@ -18,13 +20,5 @@ class CryptonatorRateService extends AbstractRateService implements RateServiceI
             $responseContent->ticker->change,
             $responseContent->ticker->volume
         );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function getUrl(): string
-    {
-        return 'https://api.cryptonator.com/api/full/btc-usd';
     }
 }

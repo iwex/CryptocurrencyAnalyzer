@@ -8,41 +8,45 @@ use GuzzleHttp\Psr7\Response;
 abstract class AbstractRateService
 {
     /**
+     * @var Client
+     */
+    private $client;
+
+    public function __construct()
+    {
+        $this->client = new Client();
+    }
+
+    /**
+     * @param string $method
+     * @param string $url
+     * @param array  $options
      * @return mixed
      */
-    public function getResponseContent()
+    public function getResponseContent(string $method, string $url, array $options = [])
     {
-        return \GuzzleHttp\json_decode($this->getResponse()->getBody()->getContents());
+        return $this->decodeResponseContents(
+            $this->getResponse($method, $url, $options)
+        );
     }
 
     /**
+     * @param string $method
+     * @param string $url
+     * @param array  $options
      * @return Response
      */
-    public function getResponse(): Response
+    public function getResponse(string $method, string $url, array $options = []): Response
     {
-        $client = new Client();
-
-        return $client->request($this->getMethod(), $this->getUrl(), $this->getOptions());
+        return $this->client->request($method, $url, $options);
     }
 
     /**
-     * @return string
+     * @param Response $response
+     * @return mixed
      */
-    protected function getMethod(): string
+    protected function decodeResponseContents(Response $response)
     {
-        return 'GET';
-    }
-
-    /**
-     * @return string
-     */
-    abstract protected function getUrl(): string;
-
-    /**
-     * @return array
-     */
-    protected function getOptions(): array
-    {
-        return [];
+        return \GuzzleHttp\json_decode($response->getBody()->getContents());
     }
 }
