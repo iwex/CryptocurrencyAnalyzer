@@ -2,23 +2,18 @@
 
 namespace App\Services\Rate;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Response;
-
-class BitStampRateService implements RateServiceInterface
+class BitStampRateService extends AbstractRateService implements RateServiceInterface
 {
     const URL = 'https://www.bitstamp.net/api/v2/ticker/btcusd';
     const LAST_HOUR_URL = 'https://www.bitstamp.net/api/v2/ticker_hour/btcusd';
 
+    /**
+     * {@inheritdoc}
+     */
     public function getRate(): Rate
     {
-        $client = new Client();
-
-        /** @var Response $response */
-        $response         = $client->request('GET', self::URL);
-        $lastHour         = $client->request('GET', self::LAST_HOUR_URL);
-        $responseContent  = \GuzzleHttp\json_decode($response->getBody()->getContents());
-        $lastHourResponse = \GuzzleHttp\json_decode($lastHour->getBody()->getContents());
+        $responseContent  = $this->getResponseContent('GET', self::URL);
+        $lastHourResponse = $this->getResponseContent('GET', self::LAST_HOUR_URL);
 
         $rate = new Rate(
             'BTC',
