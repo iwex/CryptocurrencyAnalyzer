@@ -4,7 +4,7 @@ namespace App\Services\Rate;
 
 class CryptonatorRateService extends AbstractRateService implements RateServiceInterface
 {
-    const URL = 'https://api.cryptonator.com/api/full/btc-us';
+    const URL = 'https://api.cryptonator.com/api/full/btc-usd';
 
     /**
      * {@inheritdoc}
