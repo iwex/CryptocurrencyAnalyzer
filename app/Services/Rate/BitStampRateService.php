@@ -12,14 +12,14 @@ class BitStampRateService extends AbstractRateService implements RateServiceInte
      */
     public function getRate(): Rate
     {
-        $responseContent  = $this->getResponseContent('GET', self::URL);
-        $lastHourResponse = $this->getResponseContent('GET', self::LAST_HOUR_URL);
+        $responseContent         = $this->getResponseContent('GET', self::URL);
+        $lastHourResponseContent = $this->getResponseContent('GET', self::LAST_HOUR_URL);
 
         $rate = new Rate(
             'BTC',
             'USD',
             $responseContent->last,
-            $lastHourResponse->last,
+            $lastHourResponseContent->last,
             $responseContent->volume
         );
 
