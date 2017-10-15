@@ -2,29 +2,29 @@
 
 namespace App\Services\Rate;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Response;
-
-class CryptonatorRateService implements RateServiceInterface
+class CryptonatorRateService extends AbstractRateService implements RateServiceInterface
 {
-    const URL = 'https://api.cryptonator.com/api/full/btc-usd';
-
+    /**
+     * {@inheritdoc}
+     */
     public function getRate(): Rate
     {
-        $client = new Client();
+        $responseContent = $this->getResponseContent();
 
-        /** @var Response $response */
-        $response        = $client->request('GET', self::URL);
-        $responseContent = \GuzzleHttp\json_decode($response->getBody()->getContents());
-
-        $rate = new Rate(
+        return new Rate(
             $responseContent->ticker->base,
             $responseContent->ticker->target,
             $responseContent->ticker->price,
             $responseContent->ticker->change,
             $responseContent->ticker->volume
         );
+    }
 
-        return $rate;
+    /**
+     * {@inheritdoc}
+     */
+    protected function getUrl(): string
+    {
+        return 'https://api.cryptonator.com/api/full/btc-usd';
     }
 }
