@@ -22,11 +22,27 @@ abstract class AbstractRateService
     {
         $client = new Client();
 
-        return $client->request('GET', $this->getUrl());
+        return $client->request($this->getMethod(), $this->getUrl(), $this->getOptions());
+    }
+
+    /**
+     * @return string
+     */
+    protected function getMethod(): string
+    {
+        return 'GET';
     }
 
     /**
      * @return string
      */
     abstract protected function getUrl(): string;
+
+    /**
+     * @return array
+     */
+    protected function getOptions(): array
+    {
+        return [];
+    }
 }
